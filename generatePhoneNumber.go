@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"flag"
 	"fmt"
 	"os"
@@ -18,14 +19,17 @@ func generatePhoneNumber(first string) (string) {
 
 func wirterPhoneNumber(phone string)  {
 	file,err := os.OpenFile(fmt.Sprintf("./%s.txt",phone[:3]),os.O_WRONLY| os.O_CREATE|os.O_APPEND,0666)
-	if err==nil{
-		file.WriteString(phone+"\n")
-		file.Close()
+	if err!=nil{
+		//file.WriteString(phone+"\n")
+		//file.Close()
+		fmt.Println("Read File error",err.Error())
 	}
-	//bufWriter := bufio.NewWriter(file)
-
-
-
+	bufWriter := bufio.NewWriter(file)
+	defer func() {
+		bufWriter.Flush()
+		file.Close()
+	}()
+	bufWriter.WriteString(phone+"\n")
 }
 func batchGenerate(first string,count int64)  {
 	var i int64
