@@ -22,13 +22,17 @@ func wirterPhoneNumber(phone string)  {
 		file.WriteString(phone+"\n")
 		file.Close()
 	}
+	//bufWriter := bufio.NewWriter(file)
+
+
+
 }
 func batchGenerate(first string,count int64)  {
 	var i int64
 	for i =0; i<count;i++{
 		phone := generatePhoneNumber(first)
 		wirterPhoneNumber(phone)
-		info := fmt.Sprintf("[Info] %s	进度%.2f%%	已完成%d", time.Now().Format("2006-01-02 15:04:05"), (float64((i+1)/count) *100 ),(i+1))
+		info := fmt.Sprintf("[Info] %s	进度%.2f%%	已完成第 %d 个", time.Now().Format("2006-01-02 15:04:05"), (float64(i+1)/float64(count) *100 ),(i+1))
 		fmt.Println(info)
 	}
 }
@@ -44,5 +48,10 @@ func main()  {
 		fmt.Println(info)
 		os.Exit(1)
 	}
+	beginTime := time.Now()
 	batchGenerate(first,count)
+	endTime := time.Now()
+	result := fmt.Sprintf("[End] 共生成 %d 条，耗时 %2f 秒",count,endTime.Sub(beginTime).Seconds())
+	fmt.Println(result)
+
 }
