@@ -1,11 +1,15 @@
 ## 介绍
-指定手机号前三位，生成手机号并写入文本中
+指定手机号前三位和电话号码归属地，随机生成手机号，并写入文本中
 ## 使用方法
 ```
 Windows.exe -h
-Usage of Windows.exe:
--c int The count of generate phone number, default 10000000 (default 10000000)
--f string Top three mobile phone numbers, for example 135 136
+Usage of gen_phone_windos.exe:
+  -C string
+        set the city of phone number
+  -c int
+        The count of generate phone number, default 10000000 (default 10000000)
+  -f string
+        Top three mobile phone numbers, for example 135 136
 
 
 For Example:

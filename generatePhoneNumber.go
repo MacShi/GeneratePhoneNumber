@@ -25,24 +25,24 @@ func wirterPhoneNumber(phone string) {
 	}
 }
 
-func checkPhone(phone string) bool {
+func checkPhone(phone string,city string) bool {
 	ok, err := phonedata.Find(phone)
 	if err != nil {
 		fmt.Println(err.Error())
 		return false
 	}
-	if ok.City == "北京" {
+	if ok.City == city {
 		return true
 	} else {
 		return false
 	}
 }
 
-func batchGenerate(first string, count int64) {
+func batchGenerate(first string, count int64,city string) {
 	var i int64
 	for i = 0; i < count; i++ {
 		phone := generatePhoneNumber(first)
-		if checkPhone(phone) {
+		if checkPhone(phone,city) {
 			wirterPhoneNumber(phone)
 		}
 		info := fmt.Sprintf("[Info] %s	进度%.2f%%	已完成第 %d 个", time.Now().Format("2006-01-02 15:04:05"), (float64(i+1) / float64(count) * 100), (i + 1))
@@ -53,16 +53,18 @@ func batchGenerate(first string, count int64) {
 func main() {
 	var first string
 	var count int64
+	var city  string
 	flag.StringVar(&first, "f", "", "Top three mobile phone numbers, for example 135 136")
 	flag.Int64Var(&count, "c", 10000000, "The count of generate phone number, default 10000000")
+	flag.StringVar(&city, "C", "", "Set the city of phone number")
 	flag.Parse()
 	if len(first) == 0 {
-		info := "Usage of gen_phone_windos.exe:\n  -c int\n        The count of generate phone number, default 10000000 (default 10000000)\n  -f string\n        Top three mobile phone numbers, for example 135 136"
+		info := "Usage of gen_phone_windos.exe:\n  -C string\n        set the city of phone number\n  -c int\n        The count of generate phone number, default 10000000 (default 10000000)\n  -f string\n        Top three mobile phone numbers, for example 135 136"
 		fmt.Println(info)
 		os.Exit(1)
 	}
 	beginTime := time.Now()
-	batchGenerate(first, count)
+	batchGenerate(first, count, city)
 	endTime := time.Now()
 	result := fmt.Sprintf("[End] 共生成 %d 条，耗时 %2f 秒", count, endTime.Sub(beginTime).Seconds())
 	fmt.Println(result)
