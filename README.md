@@ -14,6 +14,6 @@ Usage of gen_phone_windos.exe:
 
 For Example:
 //在当前目录下生成135.txt文件，共有1000行135开头的手机号
-Windows.exe -f 135 -c 1000
+Windows.exe -C 北京 -f 135 -c 100000000
 ```
 
